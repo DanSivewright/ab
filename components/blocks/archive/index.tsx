@@ -1,5 +1,6 @@
 import { Page } from "@/types/payload-types"
 import serialize from "@/lib/serialize"
+import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
 import { Section } from "@/components/section"
 
@@ -20,17 +21,11 @@ export const Archive: React.FC<Props> = ({
   paddingTop,
 }) => {
   return (
-    <Section
-      side={
-        paddingBottom && paddingTop
-          ? "y"
-          : paddingBottom && !paddingTop
-            ? "b"
-            : !paddingBottom && paddingTop
-              ? "t"
-              : "y"
-      }
-      className="gutter mx-auto flex max-w-screen-2xl flex-col items-start gap-4 md:gap-6 lg:gap-8 xl:gap-10"
+    <div
+      className={cn("", {
+        "px-2 mb-0 mx-auto w-full flex flex-col items-start gap-4 md:gap-6 lg:gap-8 xl:gap-10":
+          block.populateBy === "selection" && block.renderAs === "grid",
+      })}
     >
       {block.richText && (
         <article className="text-balance">
@@ -44,6 +39,6 @@ export const Archive: React.FC<Props> = ({
       {block.populateBy === "selection" ? (
         <ArchiveBySelection block={block} />
       ) : null}
-    </Section>
+    </div>
   )
 }

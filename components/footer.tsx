@@ -1,7 +1,7 @@
 type Props = {}
 export const Footer: React.FC<Props> = ({}) => {
   return (
-    <footer className="relative mt-2 flex w-full flex-col bg-muted">
+    <footer className="relative mt-3 flex w-full flex-col bg-muted">
       <div className="relative flex overflow-x-hidden">
         <div className="animate-marquee whitespace-nowrap py-12">
           <span className="mx-4  w-full text-nowrap text-[12vw] font-black italic text-red-500">

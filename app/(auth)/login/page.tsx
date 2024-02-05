@@ -102,7 +102,7 @@ const LoginPage: React.FC<Props> = ({}) => {
             )}
           />
           <LoaderButton
-            size="jumbo"
+            size="xl"
             rounded="none"
             className="w-fit"
             type="submit"

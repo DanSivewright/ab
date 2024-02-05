@@ -13,6 +13,9 @@ export interface Config {
     events: Event
     categories: Category
     media: Media
+    sessions: Session
+    accounts: Account
+    "verification-tokens": VerificationToken
     "payload-preferences": PayloadPreference
     "payload-migrations": PayloadMigration
   }
@@ -22,6 +25,7 @@ export interface Config {
 }
 export interface User {
   id: string
+  name?: string | null
   updatedAt: string
   createdAt: string
   email: string
@@ -203,38 +207,29 @@ export interface Page {
             blockType: "cta"
           }
         | {
-            richText: {
-              [k: string]: unknown
-            }[]
+            richText?:
+              | {
+                  [k: string]: unknown
+                }[]
+              | null
             populateBy?: ("collection" | "selection") | null
-            relationTo?: ("pages" | "events") | null
+            relationTo?: "events" | null
             categories?: (string | Category)[] | null
             limit?: number | null
             selectedDocs?:
-              | (
-                  | {
-                      relationTo: "pages"
-                      value: string | Page
-                    }
-                  | {
-                      relationTo: "events"
-                      value: string | Event
-                    }
-                )[]
+              | {
+                  relationTo: "events"
+                  value: string | Event
+                }[]
               | null
             populatedDocs?:
-              | (
-                  | {
-                      relationTo: "pages"
-                      value: string | Page
-                    }
-                  | {
-                      relationTo: "events"
-                      value: string | Event
-                    }
-                )[]
+              | {
+                  relationTo: "events"
+                  value: string | Event
+                }[]
               | null
             populatedDocsTotal?: number | null
+            renderAs?: ("grid" | "list" | "bento") | null
             id?: string | null
             blockName?: string | null
             blockType: "archive"
@@ -315,21 +310,9 @@ export interface Page {
             blockType: "short-heading-hero"
           }
         | {
-            items?:
-              | {
-                  blocks?: {
-                    relationTo: "events"
-                    value: string | Event
-                  } | null
-                  id?: string | null
-                }[]
-              | null
-            id?: string | null
-            blockName?: string | null
-            blockType: "bento-block"
-          }
-        | {
+            invertBackground?: boolean | null
             text: string
+            position?: ("left" | "right") | null
             link: {
               type?: ("reference" | "custom") | null
               newTab?: boolean | null
@@ -347,6 +330,30 @@ export interface Page {
             id?: string | null
             blockName?: string | null
             blockType: "cta-text-block"
+          }
+        | {
+            background: "EDEDED" | "C9DAF0" | "E08C5B" | "41BD62" | "FFF9D7"
+            richText: {
+              [k: string]: unknown
+            }[]
+            image: string | Media
+            link: {
+              type?: ("reference" | "custom") | null
+              newTab?: boolean | null
+              appearance?:
+                | ("secondary" | "ghost" | "link" | "destructive" | "default")
+                | null
+              size?: ("xs" | "sm" | "default" | "lg" | "xl") | null
+              reference?: {
+                relationTo: "pages"
+                value: string | Page
+              } | null
+              url?: string | null
+              label: string
+            }
+            id?: string | null
+            blockName?: string | null
+            blockType: "cta-image-block"
           }
       )[]
     | null
@@ -420,6 +427,38 @@ export interface Event {
   updatedAt: string
   createdAt: string
 }
+export interface Session {
+  id: string
+  expires?: string | null
+  sessionToken?: string | null
+  userId?: string | null
+  updatedAt: string
+  createdAt: string
+}
+export interface Account {
+  id: string
+  userId?: string | null
+  type?: string | null
+  provider?: string | null
+  providerAccountId?: string | null
+  refresh_token?: string | null
+  access_token?: string | null
+  expires_at?: string | null
+  token_type?: string | null
+  scope?: string | null
+  id_token?: string | null
+  session_state?: string | null
+  updatedAt: string
+  createdAt: string
+}
+export interface VerificationToken {
+  id: string
+  identifier?: string | null
+  token?: string | null
+  expires?: string | null
+  updatedAt: string
+  createdAt: string
+}
 export interface PayloadPreference {
   id: string
   user: {
@@ -488,4 +527,8 @@ export interface Global {
   updatedAt: string
   createdAt: string
   globalType: string
+}
+
+export interface Update {
+  message: string
 }

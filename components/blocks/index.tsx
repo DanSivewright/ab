@@ -6,6 +6,7 @@ import { Archive } from "./archive"
 import { BentoBlock } from "./bento-block"
 import { Content } from "./content"
 import { CTA } from "./cta"
+import { CTAImageBLock } from "./cta-image-block"
 import { CTATextBlock } from "./cta-text-block"
 import { Media } from "./media"
 
@@ -53,8 +54,8 @@ export const Blocks: React.FC<Props> = ({ disableTopPadding, blocks }) => {
           case "cta":
             return (
               <CTA
-                paddingTop={paddingTop}
-                paddingBottom={paddingBottom}
+                // paddingTop={paddingTop}
+                // paddingBottom={paddingBottom}
                 key={block.id}
                 block={block}
               />
@@ -63,8 +64,8 @@ export const Blocks: React.FC<Props> = ({ disableTopPadding, blocks }) => {
           case "content":
             return (
               <Content
-                paddingTop={paddingTop}
-                paddingBottom={paddingBottom}
+                // paddingTop={paddingTop}
+                // paddingBottom={paddingBottom}
                 key={block.id}
                 block={block}
               />
@@ -73,8 +74,8 @@ export const Blocks: React.FC<Props> = ({ disableTopPadding, blocks }) => {
           case "image-hero":
             return (
               <ImageHero
-                paddingTop={paddingTop}
-                paddingBottom={paddingBottom}
+                // paddingTop={paddingTop}
+                // paddingBottom={paddingBottom}
                 key={block.id}
                 content={block}
               />
@@ -85,8 +86,8 @@ export const Blocks: React.FC<Props> = ({ disableTopPadding, blocks }) => {
           case "archive":
             return (
               <Archive
-                paddingTop={paddingTop}
-                paddingBottom={paddingBottom}
+                // paddingTop={paddingTop}
+                // paddingBottom={paddingBottom}
                 key={block.id}
                 block={block}
               />
@@ -94,17 +95,11 @@ export const Blocks: React.FC<Props> = ({ disableTopPadding, blocks }) => {
           case "media-block":
             return <Media key={block.id} block={block} />
 
-          case "bento-block":
-            return <BentoBlock items={block.items} />
-
           case "cta-text-block":
-            return (
-              <CTATextBlock
-                text={block.text}
-                href={"/"}
-                label={block.link.label}
-              />
-            )
+            return <CTATextBlock block={block} />
+
+          case "cta-image-block":
+            return <CTAImageBLock block={block} />
 
           default:
             // return <pre>{JSON.stringify(block, null, 3)}</pre>

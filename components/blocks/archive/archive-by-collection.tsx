@@ -48,15 +48,21 @@ export const ArchiveByCollection: React.FC<Props> = async ({
     indexEnd = archiveQuery?.totalDocs
 
   return (
-    <Grid gap="none" className="relative w-full gap-x-2 gap-y-8 pt-8">
+    <Grid
+      gap="none"
+      className={cn(
+        sectionVariants({ side: "b" }),
+        "relative w-full gap-x-2 gap-y-8 mt-3 px-3"
+      )}
+    >
       {showTotal && (
-        <Label className="text-muted-foreground/60 absolute left-0 top-0 col-span-12 ">
+        <Label className="px-3 text-muted-foreground/60 absolute left-0 top-0 col-span-12 ">
           {(typeof archiveQuery?.totalDocs === "undefined" ||
             archiveQuery?.totalDocs === 0) &&
             "Search produced no results."}
           {typeof archiveQuery?.totalDocs !== "undefined" &&
             archiveQuery?.totalDocs > 0 &&
-            `Showing ${indexStart} - ${indexEnd} of ${archiveQuery?.totalDocs} ${archiveQuery?.totalDocs > 1 ? `${options.relationTo}s` : `${options.relationTo}`}`}
+            `Showing ${indexStart} - ${indexEnd} of ${archiveQuery?.totalDocs} ${archiveQuery?.totalDocs > 1 ? `${options.relationTo}` : `${options.relationTo}`}`}
         </Label>
       )}
       {archiveQuery?.docs.map((doc) => {

@@ -17,17 +17,13 @@ const Page: React.FC<Props> = async ({ params: { routes } }) => {
     },
   })
   // there should only be one
-  const heros = pageQuery?.docs?.[0]?.hero
+  const hero = pageQuery?.docs?.[0]?.hero?.[0]
   const blocks = pageQuery?.docs?.[0]?.layout
   return (
     <>
-      {heros?.map((hero) => <Hero key={hero.id} content={hero} />)}
+      {hero && <Hero key={hero?.id} content={hero} />}
       <Blocks
-        disableTopPadding={
-          !heros ||
-          heros?.length === 0 ||
-          heros[0].blockType === "short-heading-hero"
-        }
+        disableTopPadding={!hero || hero.blockType === "short-heading-hero"}
         blocks={blocks ?? []}
       />
     </>
