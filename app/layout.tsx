@@ -6,6 +6,7 @@ import { GeistMono } from "geist/font/mono"
 import { GeistSans } from "geist/font/sans"
 
 import { Toaster } from "@/components/ui/sonner"
+import { Providers } from "@/components/providers"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 
 export const metadata: Metadata = {
@@ -21,7 +22,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${GeistMono.className} ${GeistSans.className}`}>
-        {children}
+        <Providers>{children}</Providers>
         <Toaster />
         <TailwindIndicator />
       </body>
