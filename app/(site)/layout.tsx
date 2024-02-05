@@ -4,6 +4,7 @@ import { menu } from "@/actions/menu"
 // import { menu } from "@/actions/menu"
 
 import { Footer } from "@/components/footer"
+import { Logout } from "@/components/log-out"
 
 type Props = {
   children: React.ReactNode
@@ -36,6 +37,7 @@ const SiteLayout: React.FC<Props> = async ({ children }) => {
                   {route.link.label}
                 </Link>
               ))}
+          <Logout />
         </nav>
       </header>
       {children}

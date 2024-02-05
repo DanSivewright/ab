@@ -13,9 +13,6 @@ export interface Config {
     events: Event
     categories: Category
     media: Media
-    sessions: Session
-    accounts: Account
-    "verification-tokens": VerificationToken
     "payload-preferences": PayloadPreference
     "payload-migrations": PayloadMigration
   }
@@ -26,6 +23,9 @@ export interface Config {
 export interface User {
   id: string
   name?: string | null
+  stripeCustomerId?: string | null
+  isActive?: boolean | null
+  subscriptionId?: string | null
   updatedAt: string
   createdAt: string
   email: string
@@ -424,38 +424,6 @@ export interface Event {
         [k: string]: unknown
       }[]
     | null
-  updatedAt: string
-  createdAt: string
-}
-export interface Session {
-  id: string
-  expires?: string | null
-  sessionToken?: string | null
-  userId?: string | null
-  updatedAt: string
-  createdAt: string
-}
-export interface Account {
-  id: string
-  userId?: string | null
-  type?: string | null
-  provider?: string | null
-  providerAccountId?: string | null
-  refresh_token?: string | null
-  access_token?: string | null
-  expires_at?: string | null
-  token_type?: string | null
-  scope?: string | null
-  id_token?: string | null
-  session_state?: string | null
-  updatedAt: string
-  createdAt: string
-}
-export interface VerificationToken {
-  id: string
-  identifier?: string | null
-  token?: string | null
-  expires?: string | null
   updatedAt: string
   createdAt: string
 }
