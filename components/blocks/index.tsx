@@ -3,7 +3,6 @@ import { Page } from "@/types/payload-types"
 import { ImageHero } from "../hero/image-hero"
 import { ShortHeadingHero } from "../hero/short-heading-hero"
 import { Archive } from "./archive"
-import { BentoBlock } from "./bento-block"
 import { Content } from "./content"
 import { CTA } from "./cta"
 import { CTAImageBLock } from "./cta-image-block"
@@ -96,10 +95,10 @@ export const Blocks: React.FC<Props> = ({ disableTopPadding, blocks }) => {
             return <Media key={block.id} block={block} />
 
           case "cta-text-block":
-            return <CTATextBlock block={block} />
+            return <CTATextBlock key={block.id} block={block} />
 
           case "cta-image-block":
-            return <CTAImageBLock block={block} />
+            return <CTAImageBLock key={block.id} block={block} />
 
           default:
             // return <pre>{JSON.stringify(block, null, 3)}</pre>

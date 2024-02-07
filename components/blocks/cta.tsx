@@ -43,7 +43,7 @@ export const CTA: React.FC<Props> = ({ block, paddingBottom, paddingTop }) => {
       </article>
       <div className="flex h-full shrink-0 flex-col gap-4">
         {(block.links || []).map(({ link }, i) => {
-          return <CMSLink key={i} link={link} />
+          return <CMSLink key={`${link.label}-${i}`} link={link} />
         })}
       </div>
     </div>

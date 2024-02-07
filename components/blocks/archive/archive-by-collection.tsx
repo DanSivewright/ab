@@ -66,17 +66,19 @@ export const ArchiveByCollection: React.FC<Props> = async ({
         </Label>
       )}
       {archiveQuery?.docs.map((doc) => {
+        console.log("doc::: ", doc)
         return (
           <ArchiveCard
             key={doc.id}
             // @ts-ignore
-            date={doc?.date}
-            slug={`/${options.relationTo!}/${doc.slug!}`}
+            date={doc?.details?.date}
+            // @ts-ignore
+            slug={`/${options.relationTo!}/${doc?.slug!}`}
             title={doc.title}
             // @ts-ignore
-            imageUrl={doc?.image?.url}
+            imageUrl={doc?.details?.image?.url}
             // @ts-ignore
-            alt={doc?.image?.alt}
+            alt={doc?.details?.image?.alt}
           />
         )
       })}

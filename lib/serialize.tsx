@@ -1,18 +1,16 @@
 import React, { Fragment } from "react"
-import Link from "next/link"
+import Image from "next/image"
 import escapeHTML from "escape-html"
 
+import { Media } from "@/types/payload-types"
 import { Label } from "@/components/ui/label"
 import { Paragraph } from "@/components/paragraph"
+import { sectionVariants } from "@/components/section"
 import { Title } from "@/components/title"
 
 import { isPlainObject } from "./is-plain-object"
-
-// import { Text } from "slate"
-
-// import { Label } from "../Label"
-// import { LargeBody } from "../LargeBody"
-// import { CMSLink } from "../Link"
+import { makeImageUrl } from "./make-image-url"
+import { cn } from "./utils"
 
 type Children = Leaf[]
 
@@ -31,11 +29,19 @@ const isText = (value: any) => {
   return isPlainObject(value) && typeof value.text === "string"
 }
 
-const serialize = (children?: Children): React.ReactNode[] =>
+const serialize = (
+  children?: Children,
+  className?: string,
+  imageContainerClassName?: string,
+  imageClassName?: string
+): React.ReactNode[] =>
   children?.map((node, i) => {
     if (isText(node)) {
       let text = (
         <span
+          className={cn(className, "text-balance")}
+          // className="text-balance"
+          key={i}
           dangerouslySetInnerHTML={{
             __html: escapeHTML(node.text! as string),
           }}
@@ -78,51 +84,107 @@ const serialize = (children?: Children): React.ReactNode[] =>
     }
 
     switch (node.type) {
+      case "upload": {
+        return (
+          <div
+            className={cn(
+              "w-full overflow-hidden relative aspect-square",
+              imageContainerClassName
+            )}
+          >
+            <Image
+              src={makeImageUrl((node.value as Media)?.url!)}
+              alt={(node.value as Media)?.alt}
+              fill
+              className={cn(imageClassName, "object-cover")}
+              // className="object-cover"
+            />
+          </div>
+        )
+      }
       case "h1":
         return (
-          <Title level={1} key={i}>
+          <Title
+            //
+            className={cn(className, "text-balance")}
+            level={1}
+            key={i}
+          >
             {serialize(node?.children)}
           </Title>
         )
       case "h2":
         return (
-          <Title level={2} key={i}>
+          <Title
+            //
+            className={cn(className, "text-balance")}
+            level={2}
+            key={i}
+          >
             {serialize(node?.children)}
           </Title>
         )
       case "h3":
         return (
-          <Title level={3} key={i}>
+          <Title
+            //
+            className={cn(className, "text-balance")}
+            level={3}
+            key={i}
+          >
             {serialize(node?.children)}
           </Title>
         )
       case "h4":
         return (
-          <Title level={4} key={i}>
+          <Title
+            //
+            className={cn(className, "text-balance")}
+            level={4}
+            key={i}
+          >
             {serialize(node?.children)}
           </Title>
         )
       case "h5":
         return (
-          <Title level={5} key={i}>
+          <Title
+            //
+            className={cn(className, "text-balance")}
+            level={5}
+            key={i}
+          >
             {serialize(node?.children)}
           </Title>
         )
       case "h6":
         return (
-          <Title level={6} key={i}>
+          <Title
+            //
+            className={cn(className, "text-balance")}
+            level={6}
+            key={i}
+          >
             {serialize(node?.children)}
           </Title>
         )
       case "quote":
         return (
-          <blockquote className="prose" key={i}>
+          <blockquote
+            //
+            className={cn(className, "prose")}
+            key={i}
+          >
             {serialize(node?.children)}
           </blockquote>
         )
       case "ul":
         return (
-          <ul className="prose" key={i}>
+          <ul
+            //
+            className={cn(className, "prose")}
+            key={i}
+          >
             {serialize(node?.children)}
           </ul>
         )
@@ -130,33 +192,45 @@ const serialize = (children?: Children): React.ReactNode[] =>
         return <ol key={i}>{serialize(node.children)}</ol>
       case "li":
         return <li key={i}>{serialize(node.children)}</li>
-      case "link":
-        return (
-          //   <CMSLink
-          //     key={i}
-          //     type={node.linkType === "internal" ? "reference" : "custom"}
-          //     url={node.url}
-          //     reference={node.doc as any}
-          //     newTab={Boolean(node?.newTab)}
-          //   >
-          //     {serialize(node?.children)}
-          //   </CMSLink>
-          <span>TODO::: Support link component</span>
-        )
+      // case "link":
+      //   return (
+      //     //   <CMSLink
+      //     //     key={i}
+      //     //     type={node.linkType === "internal" ? "reference" : "custom"}
+      //     //     url={node.url}
+      //     //     reference={node.doc as any}
+      //     //     newTab={Boolean(node?.newTab)}
+      //     //   >
+      //     //     {serialize(node?.children)}
+      //     //   </CMSLink>
+      //     <span>TODO::: Support link component</span>
+      //   )
 
       case "label":
-        return <Label key={i}>{serialize(node?.children)}</Label>
+        return (
+          <Label className={cn(className, "text-balance")} key={i}>
+            {serialize(node?.children)}
+          </Label>
+        )
 
       case "large-body": {
         return (
-          <Paragraph size={"lg"} key={i}>
+          <Paragraph
+            className={cn(className, "text-balance")}
+            size={"lg"}
+            key={i}
+          >
             {serialize(node?.children)}
           </Paragraph>
         )
       }
 
       default:
-        return <Paragraph key={i}>{serialize(node?.children)}</Paragraph>
+        return (
+          <Paragraph className={cn(className, "text-balance")} key={i}>
+            {serialize(node?.children)}
+          </Paragraph>
+        )
     }
   }) || []
 

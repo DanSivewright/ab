@@ -1,4 +1,4 @@
-import { Page } from "@/types/payload-types"
+import { Media, Page } from "@/types/payload-types"
 
 import { ImageHero } from "./image-hero"
 import { MinimalHero } from "./minimal-hero"
@@ -17,6 +17,12 @@ export const Hero: React.FC<Props> = ({ content }) => {
   }
 
   if (content.blockType === "minimal") {
-    return <MinimalHero text={content.title} key={content.id} />
+    return (
+      <MinimalHero
+        imageUrl={(content.image as Media).url ?? undefined}
+        text={content.title}
+        key={content.id}
+      />
+    )
   }
 }

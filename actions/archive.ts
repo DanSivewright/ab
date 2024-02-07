@@ -12,7 +12,6 @@ export const archive = handler({
   cb: async (input) => {
     const { revalidate, relationTo, ...rest } = input ?? {}
     const query = qs.stringify({ ...rest }, { addQueryPrefix: true })
-    console.log("query::: ", query)
     try {
       const request = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/${relationTo}${query}`,

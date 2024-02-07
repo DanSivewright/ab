@@ -1,5 +1,3 @@
-import Link from "next/link"
-
 import { Page } from "@/types/payload-types"
 import { cn } from "@/lib/utils"
 
@@ -7,7 +5,6 @@ import { CMSLink } from "../cms-link"
 import { gridVariants } from "../grid"
 import { Section } from "../section"
 import { Title } from "../title"
-import { Button, buttonVariants } from "../ui/button"
 
 type Props = {
   block: NonNullable<Page["layout"]>[0] & { blockType: "cta-text-block" }

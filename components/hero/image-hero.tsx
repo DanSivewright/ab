@@ -36,7 +36,9 @@ export const ImageHero: React.FC<Props> = ({
             {serialize(content.body as any)}
           </div>
           <div className="my-4 flex items-center gap-3">
-            {content.links?.map((link) => <CMSLink link={link.link} />)}
+            {content.links?.map((link) => (
+              <CMSLink key={link.id} link={link.link} />
+            ))}
           </div>
         </div>
         {content.image && (
@@ -100,7 +102,9 @@ export const ImageHero: React.FC<Props> = ({
             {serialize(content.body as any)}
           </div>
           <div className="my-4 flex items-center gap-3">
-            {content.links?.map((link) => <CMSLink link={link.link} />)}
+            {content.links?.map((link) => (
+              <CMSLink key={link.id} link={link.link} />
+            ))}
           </div>
         </div>
         {content.image && (

@@ -10,6 +10,9 @@ export const authOptions: NextAuthOptions = {
   // @ts-ignore
   adapter: MongoDBAdapter(clientPromise as any),
   debug: true,
+  session: {
+    strategy: "jwt",
+  },
   pages: {
     verifyRequest: "/verifyRequest",
     signIn: "/login",
@@ -18,6 +21,7 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      allowDangerousEmailAccountLinking: true,
     }),
   ],
   callbacks: {
@@ -30,7 +34,6 @@ export const authOptions: NextAuthOptions = {
         },
       })
       const dbUser = userQuery?.docs[0]
-      console.log("dbUser::: ", dbUser)
       if (!dbUser || !userQuery.docs.length) {
         console.log("NO USER FOUND")
         return token
@@ -38,21 +41,21 @@ export const authOptions: NextAuthOptions = {
       return {
         ...token,
         id: dbUser.id,
-        // stripeCustomerId: dbUser.stripeCustomerId,
-        // isActive: dbUser.isActive,
+        stripeCustomerId: dbUser.stripeCustomerId,
+        isActive: dbUser.isActive,
       }
     },
-    // session: async ({ session, token, user }) => {
-    //   return {
-    //     ...session,
-    //     user: {
-    //       ...session.user,
-    //       id: token.id,
-    //       // stripeCustomerId: token.stripeCustomerId,
-    //       // isActive: token.isActive,
-    //     },
-    //   }
-    // },
+    session: async ({ session, token, user }) => {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id,
+          stripeCustomerId: token.stripeCustomerId,
+          isActive: token.isActive,
+        },
+      }
+    },
   },
   events: {
     createUser: async ({ user }) => {

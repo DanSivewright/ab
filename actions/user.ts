@@ -34,6 +34,36 @@ export const updateUser = handler({
     }
   },
 })
+export const updateUserByWhere = handler({
+  schema: z.object({
+    body: z.record(z.any()),
+  }),
+  cb: async ({ body, where }) => {
+    try {
+      const query = qs.stringify({ where }, { addQueryPrefix: true })
+      const request = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users${query}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "PUT",
+          body: JSON.stringify({ ...body }),
+          credentials: "include",
+          cache: "no-store",
+        }
+      )
+      const json = (await request.json()) as Update & { doc: User }
+      return json
+    } catch (error) {
+      if (error instanceof HTTPError) {
+        console.error("HTTP Error:", error.status, error.message)
+      } else {
+        throw new Error("Failed to fetch data")
+      }
+    }
+  },
+})
 
 export const getUserById = handler({
   schema: z.object({

@@ -1,9 +1,9 @@
 type Props = {}
 export const Footer: React.FC<Props> = ({}) => {
   return (
-    <footer className="relative mt-3 flex w-full flex-col bg-muted">
+    <footer className="relative flex flex-col w-full mt-3 bg-muted">
       <div className="relative flex overflow-x-hidden">
-        <div className="animate-marquee whitespace-nowrap py-12">
+        <div className="py-12 animate-marquee whitespace-nowrap">
           <span className="mx-4  w-full text-nowrap text-[12vw] font-black italic text-red-500">
             ABOVE BROOKLYN®
           </span>
@@ -21,7 +21,7 @@ export const Footer: React.FC<Props> = ({}) => {
           </span>
         </div>
 
-        <div className="absolute top-0 animate-marquee2 whitespace-nowrap py-12">
+        <div className="absolute top-0 py-12 animate-marquee2 whitespace-nowrap">
           <span className="mx-4  w-full text-nowrap text-[12vw] font-black italic text-red-500">
             ABOVE BROOKLYN®
           </span>
@@ -40,11 +40,11 @@ export const Footer: React.FC<Props> = ({}) => {
         </div>
       </div>
       <div className="px-4 sm:px-6 lg:px-16">
-        <div className="flex flex-col items-start justify-between gap-y-12 pb-6 pt-16 lg:flex-row lg:items-center lg:py-16">
+        <div className="flex flex-col items-start justify-between pt-16 pb-6 gap-y-12 lg:flex-row lg:items-center lg:py-16">
           <div>
             <div className="flex items-center text-black">
               <div>
-                <p className="font-semibold uppercase leading-6 text-black">
+                <p className="font-semibold leading-6 text-black uppercase">
                   Above Brookly
                 </p>
                 <p className="mt-1 text-sm">
@@ -52,7 +52,7 @@ export const Footer: React.FC<Props> = ({}) => {
                 </p>
               </div>
             </div>
-            <nav className="mt-11 flex gap-8">
+            <nav className="flex gap-8 mt-11">
               <a
                 className="hover:delay-[0ms] relative -mx-3 -my-2 rounded-lg px-3 py-2 text-sm text-gray-500 transition-colors delay-150 hover:text-blue-600"
                 href="#_"
@@ -79,8 +79,8 @@ export const Footer: React.FC<Props> = ({}) => {
               </a>
             </nav>
           </div>
-          <div className="group relative -mx-4 flex items-center self-stretch p-4 transition-colors hover:bg-gray-100 sm:self-auto sm:rounded-2xl lg:mx-0 lg:self-auto lg:p-6">
-            <div className="relative flex h-24 w-24 flex-none items-center justify-center rounded-full bg-foreground">
+          <div className="relative flex items-center self-stretch p-4 -mx-4 transition-colors group hover:bg-gray-100 sm:self-auto sm:rounded-2xl lg:mx-0 lg:self-auto lg:p-6">
+            <div className="relative flex items-center justify-center flex-none w-24 h-24 rounded-full bg-foreground">
               <span className="font-mono italic text-white">AB</span>
             </div>
             <div className="ml-8 lg:w-64">
@@ -96,17 +96,17 @@ export const Footer: React.FC<Props> = ({}) => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-center border-t border-gray-200 pb-12 pt-8 md:flex-row-reverse md:justify-between md:pt-6">
+        <div className="flex flex-col items-center pt-8 pb-12 border-t border-gray-200 md:flex-row-reverse md:justify-between md:pt-6">
           <div className="max-w-xl">
             <form
-              className="mx-auto flex max-w-sm flex-col items-center justify-center"
+              className="flex flex-col items-center justify-center max-w-sm mx-auto"
               action=""
             >
-              <div className="mt-3 flex w-full flex-col gap-1 sm:flex-row">
+              <div className="flex flex-col w-full gap-1 mt-3 sm:flex-row">
                 <input
                   name="email"
                   type="email"
-                  className="font-spline block w-full rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-800 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-600/50 disabled:opacity-50"
+                  className="block w-full px-4 py-2 text-sm font-medium text-gray-800 bg-white border border-gray-300 rounded-full font-spline placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-600/50 disabled:opacity-50"
                   placeholder="Enter your email..."
                 />
                 <button
@@ -120,7 +120,7 @@ export const Footer: React.FC<Props> = ({}) => {
                     viewBox="0 0 20 20"
                     fill="currentColor"
                     aria-hidden="true"
-                    className="ml-2 h-auto w-4"
+                    className="w-4 h-auto ml-2"
                   >
                     <path
                       fillRule="evenodd"
