@@ -14,9 +14,11 @@ type Props = {
   date?: string
   slug: string
   tags?: string[]
+  className?: string
 }
 export const ArchiveCard: React.FC<Props> = ({
   imageUrl,
+  className,
   slug,
   alt,
   title,
@@ -38,7 +40,10 @@ export const ArchiveCard: React.FC<Props> = ({
   return (
     <Link
       href={slug}
-      className="group col-span-6 flex flex-col transition-all md:col-span-4 lg:col-span-3"
+      className={cn(
+        className,
+        "flex flex-col col-span-6 transition-all group md:col-span-4 lg:col-span-3"
+      )}
     >
       <div
         className={cn(

@@ -13,15 +13,15 @@ const SiteLayout: React.FC<Props> = async ({ children }) => {
   const menuQuery = await menu({ depth: 3 })
   return (
     <>
-      <header className="fixed left-4 top-4 z-50 flex items-center overflow-hidden rounded-full bg-muted/60 p-1 backdrop-blur md:w-fit">
+      <header className="fixed z-50 flex items-center p-1 overflow-hidden rounded-full left-4 top-4 bg-muted/60 backdrop-blur md:w-fit">
         <Link
           scroll={false}
           href="/"
-          className="flex h-16 w-16 items-center justify-center rounded-full bg-foreground"
+          className="flex items-center justify-center w-16 h-16 rounded-full bg-foreground"
         >
           <span className="font-mono italic text-white">AB</span>
         </Link>
-        <nav className="flex items-center gap-3 pl-4 pr-7 text-xs text-muted-foreground/70">
+        <nav className="flex items-center gap-3 pl-4 text-xs pr-7 text-muted-foreground/70">
           {menuQuery?.nav &&
             menuQuery?.nav?.length &&
             menuQuery?.nav
@@ -31,7 +31,7 @@ const SiteLayout: React.FC<Props> = async ({ children }) => {
                   className="capitalize"
                   scroll={false}
                   // @ts-ignore
-                  href={route.link.reference?.value?.slug}
+                  href={"/" + route.link.reference?.value?.slug}
                   key={route.link?.label}
                 >
                   {route.link.label}

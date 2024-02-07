@@ -1,45 +1,12 @@
 type Props = {}
 export const Footer: React.FC<Props> = ({}) => {
   return (
-    <footer className="relative flex flex-col w-full mt-3 bg-muted">
-      <div className="relative flex overflow-x-hidden">
-        <div className="py-12 animate-marquee whitespace-nowrap">
-          <span className="mx-4  w-full text-nowrap text-[12vw] font-black italic text-red-500">
-            ABOVE BROOKLYN®
-          </span>
-          <span className="mx-4  w-full text-nowrap text-[12vw] font-black italic text-red-500">
-            ABOVE BROOKLYN®
-          </span>
-          <span className="mx-4  w-full text-nowrap text-[12vw] font-black italic text-red-500">
-            ABOVE BROOKLYN®
-          </span>
-          <span className="mx-4  w-full text-nowrap text-[12vw] font-black italic text-red-500">
-            ABOVE BROOKLYN®
-          </span>
-          <span className="mx-4  w-full text-nowrap text-[12vw] font-black italic text-red-500">
-            ABOVE BROOKLYN®
-          </span>
-        </div>
+    <footer className="relative pb-24 flex overflow-hidden flex-col w-full mt-3 bg-muted">
+      <p className="absolute opacity-5 right-20 -bottom-[25%] w-full text-nowrap text-[12vw] font-black italic text-black">
+        ABOVE BROOKLYN®
+      </p>
 
-        <div className="absolute top-0 py-12 animate-marquee2 whitespace-nowrap">
-          <span className="mx-4  w-full text-nowrap text-[12vw] font-black italic text-red-500">
-            ABOVE BROOKLYN®
-          </span>
-          <span className="mx-4  w-full text-nowrap text-[12vw] font-black italic text-red-500">
-            ABOVE BROOKLYN®
-          </span>
-          <span className="mx-4  w-full text-nowrap text-[12vw] font-black italic text-red-500">
-            ABOVE BROOKLYN®
-          </span>
-          <span className="mx-4  w-full text-nowrap text-[12vw] font-black italic text-red-500">
-            ABOVE BROOKLYN®
-          </span>
-          <span className="mx-4  w-full text-nowrap text-[12vw] font-black italic text-red-500">
-            ABOVE BROOKLYN®
-          </span>
-        </div>
-      </div>
-      <div className="px-4 sm:px-6 lg:px-16">
+      <div className="px-4 z-10 sm:px-6 lg:px-16">
         <div className="flex flex-col items-start justify-between pt-16 pb-6 gap-y-12 lg:flex-row lg:items-center lg:py-16">
           <div>
             <div className="flex items-center text-black">

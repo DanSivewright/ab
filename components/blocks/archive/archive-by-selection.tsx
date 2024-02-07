@@ -8,6 +8,7 @@ import { Grid } from "@/components/grid"
 
 import { BentoBlock } from "../bento-block"
 import { ArchiveCard } from "./archive-card"
+import { ArchiveMediaCard } from "./archive-media-card"
 
 type Props = {
   block: NonNullable<Page["layout"]>[0] & {
@@ -17,24 +18,81 @@ type Props = {
   showTotal?: boolean
 }
 export const ArchiveBySelection: React.FC<Props> = ({ block, showTotal }) => {
+  if (block.renderAs === "hscroll") {
+    return (
+      <div className="flex w-screen overflow-x-scroll hide-scrollbar mb-3  px-3 gap-3">
+        {block.selectedDocs &&
+          block.selectedDocs.length &&
+          [
+            ...block?.selectedDocs,
+            ...block?.selectedDocs,
+            ...block?.selectedDocs,
+            ...block?.selectedDocs,
+          ].map((doc, i) => {
+            if (block.relationTo === "media") {
+              const event = doc.value as Media
+              return (
+                <ArchiveMediaCard
+                  key={event.id + i}
+                  imageUrl={event.url!}
+                  alt={event.alt!}
+                  className="w-[400px] flex-none"
+                />
+              )
+            } else if (block.relationTo === "events") {
+              const event = doc.value as EventType
+              return (
+                <ArchiveCard
+                  key={event.id}
+                  slug={`/events/${event.slug!}`}
+                  title={event.title}
+                  // @ts-ignore
+                  date={event.date}
+                  // @ts-ignore
+                  imageUrl={(event.image as Media).url!}
+                  // @ts-ignore
+                  alt={(event.image as Media).alt!}
+                  tags={["Event"]}
+                />
+              )
+            }
+          })}
+      </div>
+    )
+  }
+
   if (block.renderAs === "grid") {
     return (
       <Grid gap="none" className="relative w-full gap-x-2 gap-y-8">
         {block.selectedDocs &&
           block.selectedDocs.length &&
           block?.selectedDocs.map((doc) => {
-            const event = doc.value as EventType
-            return (
-              <ArchiveCard
-                key={event.id}
-                slug={`/events/${event.slug!}`}
-                title={event.title}
-                date={event.date}
-                imageUrl={(event.image as Media).url!}
-                alt={(event.image as Media).alt!}
-                tags={["Event"]}
-              />
-            )
+            if (block.relationTo === "media") {
+              const event = doc.value as Media
+              return (
+                <ArchiveMediaCard
+                  key={event.id}
+                  imageUrl={event.url!}
+                  alt={event.alt!}
+                />
+              )
+            } else if (block.relationTo === "events") {
+              const event = doc.value as EventType
+              return (
+                <ArchiveCard
+                  key={event.id}
+                  slug={`/events/${event.slug!}`}
+                  title={event.title}
+                  // @ts-ignore
+                  date={event.date}
+                  // @ts-ignore
+                  imageUrl={(event.image as Media).url!}
+                  // @ts-ignore
+                  alt={(event.image as Media).alt!}
+                  tags={["Event"]}
+                />
+              )
+            }
           })}
       </Grid>
     )

@@ -19,7 +19,7 @@ export const Hero: React.FC<Props> = ({ content }) => {
   if (content.blockType === "minimal") {
     return (
       <MinimalHero
-        imageUrl={(content.image as Media).url ?? undefined}
+        imageUrl={(content.image as Media)?.url ?? undefined}
         text={content.title}
         key={content.id}
       />

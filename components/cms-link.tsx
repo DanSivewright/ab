@@ -40,6 +40,7 @@ export const CMSLink: React.FC<Props> = ({ link, className }) => {
       className={cn(
         buttonVariants({
           variant: link.appearance,
+          rounded: "none",
           size: link.size ?? "default",
         }),
         className

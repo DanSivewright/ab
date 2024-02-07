@@ -28,7 +28,11 @@ export const Archive: React.FC<Props> = ({
       })}
     >
       {block.richText && (
-        <article className="text-balance">
+        <article
+          className={cn("text-balance", {
+            "p-3": block.renderAs === "hscroll",
+          })}
+        >
           {serialize(block.richText as any)}
         </article>
       )}

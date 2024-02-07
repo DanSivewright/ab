@@ -1,14 +1,24 @@
+import Image from "next/image"
 import { events } from "@/actions/events"
 
-import { Category } from "@/types/payload-types"
+import { Category, Media } from "@/types/payload-types"
+import { makeImageUrl } from "@/lib/make-image-url"
 import serialize from "@/lib/serialize"
 import { cn } from "@/lib/utils"
-import { badgeVariants } from "@/components/ui/badge"
+import { Badge } from "@/components/ui/badge"
+import { buttonVariants } from "@/components/ui/button"
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card"
 import { Blocks } from "@/components/blocks"
 import { Grid } from "@/components/grid"
 import { Hero } from "@/components/hero"
+import { Marquee } from "@/components/marquee"
 import { Paragraph } from "@/components/paragraph"
 import { sectionVariants } from "@/components/section"
+import { Title } from "@/components/title"
 
 type Props = {
   slug: string
@@ -28,26 +38,53 @@ export const Event: React.FC<Props> = async ({ slug }) => {
   return (
     <>
       {hero && <Hero key={hero?.id} content={hero} />}
-
-      <ul
-        className={cn(
-          sectionVariants({ side: "t", size: "sm" }),
-          "w-full px-4 flex items-center gap-2 flex-wrap"
-        )}
+      <Paragraph
+        className="pl-4 font-mono italic text-muted-foreground/70"
+        size="lg"
       >
-        <Paragraph
-          className="w-full font-mono italic text-muted-foreground/70"
-          size="lg"
-        >
-          Categories
-        </Paragraph>
+        Details
+      </Paragraph>
+      <ul className="flex flex-wrap items-center w-full gap-2 px-4 mt-2">
+        <HoverCard openDelay={50}>
+          <HoverCardTrigger asChild>
+            <button
+              className={cn(
+                buttonVariants({
+                  size: "xl",
+                  rounded: "none",
+                })
+              )}
+            >
+              Book Now
+            </button>
+          </HoverCardTrigger>
+          <HoverCardContent align="start" className="flex flex-col gap-2">
+            <div className="w-full aspect-square rounded-lg relative overflow-hidden">
+              <Image
+                src={makeImageUrl((event?.details?.image as Media)?.url!)}
+                alt={(event?.details?.image as Media)?.alt}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <Paragraph className="font-semibold">{event?.title}</Paragraph>
+            <Badge variant={"secondary"} className="w-fit shrink-0" size="sm">
+              Fee: R100
+            </Badge>
+          </HoverCardContent>
+        </HoverCard>
+
         {event?.details?.categories?.length && event?.details?.categories
           ? (event?.details?.categories as Category[])?.map((category) => (
               <li
                 key={category.id}
                 className={cn(
-                  badgeVariants({ size: "humungous", variant: "secondary" }),
-                  ""
+                  buttonVariants({
+                    size: "xl",
+                    rounded: "none",
+                    variant: "secondary",
+                  }),
+                  "md:last:rounded-r-full md:last:rounded-l-none"
                 )}
               >
                 {category.title}
