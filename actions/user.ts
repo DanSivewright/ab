@@ -76,6 +76,9 @@ export const getUserById = handler({
         {
           method: "GET",
           credentials: "include",
+          next: {
+            revalidate: 60,
+          },
         }
       )
       const json = (await request.json()) as User
@@ -99,6 +102,9 @@ export const getUserByWhere = handler({
         {
           method: "GET",
           credentials: "include",
+          next: {
+            revalidate: 60,
+          },
         }
       )
       const json = (await request.json()) as Collection & { docs: User[] }
