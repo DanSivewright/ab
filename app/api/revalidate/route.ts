@@ -9,8 +9,8 @@ export async function POST(request: Request) {
   if (secret !== process.env.REVALIDATE_SECRET)
     return new Response("Unauthorized", { status: 401 })
   try {
-    revalidateTag("pages")
-    revalidateTag("events")
+    await revalidateTag("pages")
+    await revalidateTag("events")
   } catch (error) {
     return new Response(`Webhook error: ${JSON.stringify(error as any)}`, {
       status: 400,
