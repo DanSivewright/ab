@@ -53,7 +53,7 @@ const baseSchema = z.object({
   where: z
     .record(
       z.object({
-        equals: z.string().optional(),
+        equals: z.union([z.string(), z.boolean()]).optional(),
         in: z.array(z.string()).optional(),
       })
     )

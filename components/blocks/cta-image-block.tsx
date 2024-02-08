@@ -14,7 +14,7 @@ type Props = {
 export const CTAImageBLock: React.FC<Props> = ({ block }) => {
   return (
     <Grid className="mx-3 p-3" style={{ background: `#${block.background}` }}>
-      <div className="col-span-5 aspect-square relative overflow-hidden">
+      <div className="col-span-12 md:col-span-5 aspect-square relative overflow-hidden">
         <Image
           className="object-cover"
           fill
@@ -22,11 +22,9 @@ export const CTAImageBLock: React.FC<Props> = ({ block }) => {
           alt={(block.image as Media).alt}
         />
       </div>
-      <div className="w-full gutter h-full text-balance col-span-7 flex flex-col items-start justify-center">
+      <div className="w-full gutter h-full text-balance col-span-12 mb-20 md:mb-0 md:col-span-7 flex flex-col items-start justify-center">
         {serialize(block.richText as any[])}
-        {/* <Title level={5} showAs={2} className="text-pretty">
-          {block.text}
-        </Title> */}
+
         <CMSLink className="w-fit mt-6" link={block.link}></CMSLink>
       </div>
     </Grid>

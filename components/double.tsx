@@ -2,12 +2,14 @@
 
 import { useRef } from "react"
 import Image, { StaticImageData } from "next/image"
+import Link from "next/link"
 import { motion } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 import { useScrambler } from "@/hooks/use-scrambler"
 import { titleVariants } from "@/components/title"
 
+import { ConditionalLink } from "./conditional-link"
 import { badgeVariants } from "./ui/badge"
 
 type Props = {
@@ -18,6 +20,8 @@ type Props = {
   titleTwo: string
   badgesOne?: string[]
   badgesTwo?: string[]
+  hrefOne: string | null
+  hrefTwo: string | null
 }
 
 export const Double: React.FC<Props> = ({
@@ -28,6 +32,8 @@ export const Double: React.FC<Props> = ({
   badgesTwo,
   titleOne,
   titleTwo,
+  hrefOne,
+  hrefTwo,
 }) => {
   const firstImage = useRef<HTMLDivElement>(null) // Add type annotation for the ref
   const secondImage = useRef<HTMLDivElement>(null) // Add type annotation for the ref
@@ -75,6 +81,8 @@ export const Double: React.FC<Props> = ({
     text: titleTwo,
   })
 
+  const MotionLink = motion(ConditionalLink, { forwardMotionProps: true })
+
   return (
     <motion.div
       className={cn("flex h-[45vw] w-full items-end gap-2")}
@@ -85,38 +93,44 @@ export const Double: React.FC<Props> = ({
       <div
         onMouseEnter={replayLeft}
         ref={firstImage}
-        className="relative flex w-[66.66%] cursor-pointer flex-col justify-between"
+        className="relative flex w-[66.66%] cursor-pointer "
       >
-        <div className="relative overflow-hidden pt-[66.66%]">
-          <Image
-            className="object-cover brightness-75"
-            src={imageOne}
-            alt={"image"}
-            fill
-          />
-        </div>
-        <div className="absolute inset-0 z-10 flex h-full w-full flex-col justify-between p-3">
-          <h2
-            ref={leftCardTitle}
-            className={cn(
-              titleVariants({ level: 6 }),
-              "text-balance text-white"
-            )}
-            style={{ margin: 0 }}
-          ></h2>
-          {badgesOne?.length ? (
-            <ul className="flex items-center gap-3">
-              {badgesOne.map((badge, i) => (
-                <li
-                  key={`${badge}-${i}-${Math.random().toString(36)}`}
-                  className={badgeVariants({ variant: "blur", size: "lg" })}
-                >
-                  Badge One
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </div>
+        <ConditionalLink
+          className="w-full h-full flex-col justify-between"
+          href={hrefOne ?? null}
+          condition={!!hrefOne}
+        >
+          <div className="relative overflow-hidden pt-[66.66%]">
+            <Image
+              className="object-cover brightness-75"
+              src={imageOne}
+              alt={"image"}
+              fill
+            />
+          </div>
+          <div className="absolute inset-0 z-10 flex h-full w-full flex-col justify-between p-3">
+            <h2
+              ref={leftCardTitle}
+              className={cn(
+                titleVariants({ level: 6 }),
+                "text-balance text-white"
+              )}
+              style={{ margin: 0 }}
+            ></h2>
+            {badgesOne?.length ? (
+              <ul className="flex items-center gap-3">
+                {[...badgesOne.slice(0, 2)].map((badge, i) => (
+                  <li
+                    key={`${badge}-${i}-${Math.random().toString(36)}`}
+                    className={badgeVariants({ variant: "blur", size: "lg" })}
+                  >
+                    {badge}
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </div>
+        </ConditionalLink>
       </div>
 
       <div
@@ -124,31 +138,37 @@ export const Double: React.FC<Props> = ({
         ref={secondImage}
         className="relative flex w-[33.33%] cursor-pointer flex-col justify-between"
       >
-        <div className="relative pt-[66%]">
-          <Image src={imageTwo} className="object-cover" fill alt={"image"} />
-        </div>
-        <div className="absolute inset-0 z-10 flex h-full w-full flex-col justify-between p-3">
-          <h2
-            ref={rightCardTitle}
-            className={cn(
-              titleVariants({ level: 6 }),
-              "text-balance text-white"
-            )}
-            style={{ margin: 0 }}
-          ></h2>
-          {badgesTwo?.length ? (
-            <ul className="flex items-center gap-3">
-              {badgesTwo.map((badge, i) => (
-                <li
-                  key={`${badge}-${i}-${Math.random().toString(36)}`}
-                  className={badgeVariants({ variant: "blur", size: "lg" })}
-                >
-                  Badge One
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </div>
+        <ConditionalLink
+          className="w-full h-full flex-col justify-between"
+          href={hrefTwo ?? null}
+          condition={!!hrefTwo}
+        >
+          <div className="relative pt-[66%]">
+            <Image src={imageTwo} className="object-cover" fill alt={"image"} />
+          </div>
+          <div className="absolute inset-0 z-10 flex h-full w-full flex-col justify-between p-3">
+            <h2
+              ref={rightCardTitle}
+              className={cn(
+                titleVariants({ level: 6 }),
+                "text-balance text-white"
+              )}
+              style={{ margin: 0 }}
+            ></h2>
+            {badgesTwo?.length ? (
+              <ul className="flex items-center gap-3">
+                {[...badgesTwo.slice(0, 2)].map((badge, i) => (
+                  <li
+                    key={`${badge}-${i}-${Math.random().toString(36)}`}
+                    className={badgeVariants({ variant: "blur", size: "lg" })}
+                  >
+                    {badge}
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </div>
+        </ConditionalLink>
       </div>
     </motion.div>
   )

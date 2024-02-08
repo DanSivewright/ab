@@ -4,6 +4,7 @@ import Link from "next/link"
 import { makeImageUrl } from "@/lib/make-image-url"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
+import { ConditionalLink } from "@/components/conditional-link"
 import { sectionVariants } from "@/components/section"
 import { Title } from "@/components/title"
 
@@ -15,9 +16,11 @@ type Props = {
   slug: string
   tags?: string[]
   className?: string
+  privated?: boolean
 }
 export const ArchiveCard: React.FC<Props> = ({
   imageUrl,
+  privated,
   className,
   slug,
   alt,
@@ -38,7 +41,8 @@ export const ArchiveCard: React.FC<Props> = ({
     return colors[randomIndex]
   }
   return (
-    <Link
+    <ConditionalLink
+      condition={!!privated}
       href={slug}
       className={cn(
         className,
@@ -51,6 +55,9 @@ export const ArchiveCard: React.FC<Props> = ({
           `${getRandomColor()} relative flex aspect-[9/16] cursor-pointer overflow-hidden hover:rounded-xl`
         )}
       >
+        {/* {privated && (
+          <div className="absolute inset-0 bg-white/5 backdrop-blur z-10"></div>
+        )} */}
         {imageUrl && (
           <Image
             src={imageUrl}
@@ -70,11 +77,13 @@ export const ArchiveCard: React.FC<Props> = ({
       <div className="flex items-center gap-2">
         {date && (
           <Badge className="w-fit shrink-0" size="sm" variant="secondary">
-            {new Intl.DateTimeFormat("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            }).format(new Date(date))}
+            {privated
+              ? "TBA"
+              : new Intl.DateTimeFormat("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                }).format(new Date(date))}
           </Badge>
         )}
         {tags && tags.length > 0 ? (
@@ -94,6 +103,6 @@ export const ArchiveCard: React.FC<Props> = ({
           ""
         )}
       </div>
-    </Link>
+    </ConditionalLink>
   )
 }

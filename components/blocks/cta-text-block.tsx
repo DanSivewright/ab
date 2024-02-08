@@ -36,24 +36,14 @@ export const CTATextBlock: React.FC<Props> = ({ block }) => {
       spacer="p"
     >
       <div
-        className={cn("col-span-6", {
-          "col-start-7": block.position === "right",
+        className={cn("col-span-12 lg:col-span-6", {
+          " lg:col-start-7": block.position === "right",
         })}
       >
         <Title level={3} showAs={1} className="text-balance">
           {block.text}
         </Title>
         <CMSLink link={block.link} />
-        {/* <Link
-          href={href}
-          className={buttonVariants({
-            variant: "secondary",
-            size: "jumbo",
-            rounded: "full",
-          })}
-        >
-          {label}
-        </Link> */}
       </div>
     </Section>
   )

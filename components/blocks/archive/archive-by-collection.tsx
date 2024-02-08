@@ -1,6 +1,6 @@
 import { archive } from "@/actions/archive"
 
-import { Event, Media, Page } from "@/types/payload-types"
+import { Media, Page } from "@/types/payload-types"
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
 import { Grid } from "@/components/grid"
@@ -25,7 +25,7 @@ export const ArchiveByCollection: React.FC<Props> = async ({
     relationTo: options.relationTo!,
     depth: 1,
     limit: options.limit ?? 10,
-    sort: sort ?? "-createdAt",
+    sort: sort ?? "-date",
     where: {
       ...(options.categories && options.categories.length > 0
         ? {
@@ -56,6 +56,7 @@ export const ArchiveByCollection: React.FC<Props> = async ({
             {archiveQuery?.docs.map((doc) => {
               return (
                 <ArchiveCard
+                  privated={doc.private ?? false}
                   key={doc.id}
                   // @ts-ignore
                   date={doc?.details?.date}
@@ -124,6 +125,7 @@ export const ArchiveByCollection: React.FC<Props> = async ({
         if (options.relationTo === "events") {
           return (
             <ArchiveCard
+              privated={!doc.private ?? false}
               key={doc.id}
               // @ts-ignore
               date={doc?.details?.date}

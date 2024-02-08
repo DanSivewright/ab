@@ -47,6 +47,7 @@ const LoginPage: React.FC<Props> = ({}) => {
         }}
         icon="ArrowRight"
         pending={loading}
+        size={"xl"}
       >
         CONTINUE WITH GOOGLE
       </LoaderButton>

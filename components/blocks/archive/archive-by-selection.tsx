@@ -45,9 +45,9 @@ export const ArchiveBySelection: React.FC<Props> = ({ block, showTotal }) => {
                   // @ts-ignore
                   date={event.date}
                   // @ts-ignore
-                  imageUrl={(event.image as Media).imagekit?.url!}
+                  imageUrl={(event.image as Media)?.imagekit?.url!}
                   // @ts-ignore
-                  alt={(event.image as Media).alt!}
+                  alt={(event.image as Media)?.alt!}
                   tags={["Event"]}
                 />
               )
@@ -100,6 +100,7 @@ export const ArchiveBySelection: React.FC<Props> = ({ block, showTotal }) => {
         ? block.selectedDocs?.map((item) => {
             const event = item.value as EventType
             return {
+              href: !item.value?.private ? `/events/${item.value?.slug}` : null,
               title: event.title,
               imagePath: (event?.details?.image as Media).imagekit?.url!,
               categories:
