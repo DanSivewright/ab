@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 
-import { Page } from "@/types/payload-types"
+import { Event, Page } from "@/types/payload-types"
 import { cn } from "@/lib/utils"
 
 import { buttonVariants } from "./ui/button"
@@ -11,15 +11,19 @@ type Props = {
   link: {
     type?: ("reference" | "custom") | null
     newTab?: boolean | null
-    size?: ("xs" | "sm" | "default" | "lg" | "xl") | null
     appearance?:
       | ("secondary" | "ghost" | "link" | "destructive" | "default")
       | null
-
-    reference?: {
-      relationTo: "pages"
-      value: string | Page
-    } | null
+    size?: ("xs" | "sm" | "default" | "lg" | "xl") | null
+    reference?:
+      | ({
+          relationTo: "pages"
+          value: string | Page
+        } | null)
+      | ({
+          relationTo: "events"
+          value: string | Event
+        } | null)
     url?: string | null
     label: string
   }
@@ -29,9 +33,9 @@ export const CMSLink: React.FC<Props> = ({ link, className }) => {
   const href =
     link.type === "reference" &&
     typeof link.reference?.value === "object" &&
-    link.reference.value.slug
+    (link.reference.value as Event | Page).slug
       ? `${link.reference?.relationTo !== "pages" ? `/${link.reference?.relationTo}` : ""}/${
-          link.reference.value.slug
+          (link.reference.value as Event | Page).slug
         }`
       : link.url
   return (
