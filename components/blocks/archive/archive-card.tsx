@@ -77,7 +77,7 @@ export const ArchiveCard: React.FC<Props> = ({
       <div className="flex items-center gap-2">
         {date && (
           <Badge className="w-fit shrink-0" size="sm" variant="secondary">
-            {privated
+            {!privated
               ? "TBA"
               : new Intl.DateTimeFormat("en-US", {
                   year: "numeric",
