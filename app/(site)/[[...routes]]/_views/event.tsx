@@ -62,7 +62,7 @@ export const Event: React.FC<Props> = async ({ slug }) => {
           <HoverCardContent align="start" className="flex flex-col gap-2">
             <div className="w-full aspect-square rounded-lg relative overflow-hidden">
               <Image
-                src={makeImageUrl((event?.details?.image as Media)?.url!)}
+                src={(event?.details?.image as Media).imagekit?.url!}
                 alt={(event?.details?.image as Media)?.alt}
                 fill
                 className="object-cover"

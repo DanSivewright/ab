@@ -2,8 +2,6 @@
 
 import { useRef } from "react"
 import Image, { StaticImageData } from "next/image"
-import ImageOne from "@/public/about-abstract.webp"
-import ImageTwo from "@/public/about-image.webp"
 import { motion } from "framer-motion"
 
 import { cn } from "@/lib/utils"

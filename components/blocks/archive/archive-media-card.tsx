@@ -26,7 +26,7 @@ export const ArchiveMediaCard: React.FC<Props> = ({
     >
       {imageUrl && (
         <Image
-          src={`${makeImageUrl(imageUrl as string)}`}
+          src={imageUrl as string}
           fill
           className="object-cover"
           alt={alt as string}

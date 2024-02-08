@@ -93,7 +93,7 @@ const serialize = (
             )}
           >
             <Image
-              src={makeImageUrl((node.value as Media)?.url!)}
+              src={(node.value as Media)?.imagekit?.url!}
               alt={(node.value as Media)?.alt}
               fill
               className={cn(imageClassName, "object-cover")}

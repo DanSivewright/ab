@@ -18,8 +18,8 @@ export const CTAImageBLock: React.FC<Props> = ({ block }) => {
         <Image
           className="object-cover"
           fill
-          src={makeImageUrl((block.image as Media).url!)}
-          alt={makeImageUrl((block.image as Media).alt!)}
+          src={(block.image as Media).imagekit?.url!}
+          alt={(block.image as Media).alt}
         />
       </div>
       <div className="w-full gutter h-full text-balance col-span-7 flex flex-col items-start justify-center">

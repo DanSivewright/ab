@@ -43,7 +43,7 @@ export const Media: React.FC<Props> = ({
         }
       >
         <Image
-          src={makeImageUrl((block.media as MediaType).url!)}
+          src={(block.media as MediaType).imagekit?.url!}
           alt={(block.media as MediaType).alt}
           className="object-cover"
           fill
@@ -69,7 +69,7 @@ export const Media: React.FC<Props> = ({
       >
         <div className="relative size-full overflow-hidden rounded-lg">
           <Image
-            src={makeImageUrl((block.media as MediaType).url!)}
+            src={(block.media as MediaType).imagekit?.url!}
             alt={(block.media as MediaType).alt}
             className="object-cover"
             fill

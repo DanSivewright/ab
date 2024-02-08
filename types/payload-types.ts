@@ -804,6 +804,12 @@ export interface Event {
 export interface Media {
   id: string
   alt: string
+  imagekit?: {
+    fileId?: string | null
+    thumbnailUrl?: string | null
+    url?: string | null
+    AITags?: string | null
+  }
   updatedAt: string
   createdAt: string
   url?: string | null
