@@ -37,7 +37,7 @@ const SiteLayout: React.FC<Props> = async ({ children }) => {
                   {route.link.label}
                 </Link>
               ))}
-          <Logout />
+          {/* <Logout /> */}
         </nav>
       </header>
       {children}
