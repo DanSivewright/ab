@@ -14,10 +14,10 @@ export const events = handler({
         {
           method: "GET",
           credentials: "include",
-          next: {
-            revalidate: 60,
-            tags: ["events"],
-          },
+          // next: {
+          //   revalidate: 60,
+          //   tags: ["events"],
+          // },
         }
       )
       const json = (await request.json()) as Collection & { docs: Event[] }

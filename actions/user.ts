@@ -102,9 +102,9 @@ export const getUserByWhere = handler({
         {
           method: "GET",
           credentials: "include",
-          next: {
-            revalidate: 60,
-          },
+          // next: {
+          //   revalidate: 60,
+          // },
         }
       )
       const json = (await request.json()) as Collection & { docs: User[] }
