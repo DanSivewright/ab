@@ -16,7 +16,7 @@ const SiteLayout: React.FC<Props> = async ({ children }) => {
       <header className="fixed z-50 flex items-center p-1 overflow-hidden rounded-full left-4 top-4 bg-muted/60 backdrop-blur md:w-fit">
         <Link
           scroll={false}
-          href="/"
+          href="/home"
           className="flex items-center justify-center w-16 h-16 rounded-full bg-foreground"
         >
           <span className="font-mono italic text-white">AB</span>
