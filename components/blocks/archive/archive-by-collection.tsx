@@ -114,7 +114,7 @@ export const ArchiveByCollection: React.FC<Props> = async ({
             <ArchiveMediaCard
               key={doc?.id}
               // @ts-ignore
-              imageUrl={doc?.url!}
+              imageUrl={(doc as Media)?.imagekit?.url!}
               // @ts-ignore
               alt={doc?.alt!}
               className="w-[400px] flex-none"
@@ -131,7 +131,7 @@ export const ArchiveByCollection: React.FC<Props> = async ({
               slug={`/${options.relationTo!}/${doc?.slug!}`}
               title={doc.title}
               // @ts-ignore
-              imageUrl={doc?.details?.image?.url}
+              imageUrl={(doc?.details?.image as Media)?.imagekit?.url}
               // @ts-ignore
               alt={doc?.details?.image?.alt}
             />
