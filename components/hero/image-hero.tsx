@@ -52,7 +52,7 @@ export const ImageHero: React.FC<Props> = ({
           >
             <Image
               fill
-              src={`${process.env.NEXT_PUBLIC_API_URL!.replace(/\/api$/, "")}${(content.image as Media).url}`}
+              src={(content.image as Media).url!}
               alt={(content.image as Media).alt}
               className="object-cover"
             />
