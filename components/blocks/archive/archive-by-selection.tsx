@@ -23,19 +23,14 @@ export const ArchiveBySelection: React.FC<Props> = ({ block, showTotal }) => {
       <div className="flex w-screen overflow-x-scroll hide-scrollbar mb-3  px-3 gap-3">
         {block.selectedDocs &&
           block.selectedDocs.length &&
-          [
-            ...block?.selectedDocs,
-            ...block?.selectedDocs,
-            ...block?.selectedDocs,
-            ...block?.selectedDocs,
-          ].map((doc, i) => {
+          block?.selectedDocs.map((doc, i) => {
             if (block.relationTo === "media") {
-              const event = doc.value as Media
+              const media = doc.value as Media
               return (
                 <ArchiveMediaCard
-                  key={event.id + i}
-                  imageUrl={event.url!}
-                  alt={event.alt!}
+                  key={media.id + i}
+                  imageUrl={media.url!}
+                  alt={media.alt!}
                   className="w-[400px] flex-none"
                 />
               )
@@ -45,6 +40,7 @@ export const ArchiveBySelection: React.FC<Props> = ({ block, showTotal }) => {
                 <ArchiveCard
                   key={event.id}
                   slug={`/events/${event.slug!}`}
+                  className="w-[400px] flex-none"
                   title={event.title}
                   // @ts-ignore
                   date={event.date}
@@ -105,10 +101,10 @@ export const ArchiveBySelection: React.FC<Props> = ({ block, showTotal }) => {
             const event = item.value as EventType
             return {
               title: event.title,
-              imagePath: (event.image as Media).url!,
+              imagePath: (event?.details?.image as Media).url!,
               categories:
-                event.categories && event.categories.length
-                  ? event.categories?.map((cat) => {
+                event?.details?.categories && event?.details?.categories.length
+                  ? event?.details?.categories?.map((cat) => {
                       const category = cat as Category
                       return category.title as string
                     })
@@ -116,6 +112,7 @@ export const ArchiveBySelection: React.FC<Props> = ({ block, showTotal }) => {
             }
           })
         : null
+
     return <BentoBlock items={items} />
   }
 }

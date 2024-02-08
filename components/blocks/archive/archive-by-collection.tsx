@@ -1,12 +1,13 @@
 import { archive } from "@/actions/archive"
 
-import { Page } from "@/types/payload-types"
+import { Event, Media, Page } from "@/types/payload-types"
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
 import { Grid } from "@/components/grid"
 import { sectionVariants } from "@/components/section"
 
 import { ArchiveCard } from "./archive-card"
+import { ArchiveMediaCard } from "./archive-media-card"
 
 type Props = {
   options: NonNullable<Page["layout"]>[0] & {
@@ -47,6 +48,48 @@ export const ArchiveByCollection: React.FC<Props> = async ({
   if (archiveQuery?.totalDocs && indexEnd > archiveQuery?.totalDocs)
     indexEnd = archiveQuery?.totalDocs
 
+  if (options.renderAs === "hscroll") {
+    return (
+      <div className="flex w-screen overflow-x-scroll hide-scrollbar mb-3  px-3 gap-3">
+        {options.relationTo === "events" ? (
+          <>
+            {archiveQuery?.docs.map((doc) => {
+              return (
+                <ArchiveCard
+                  key={doc.id}
+                  // @ts-ignore
+                  date={doc?.details?.date}
+                  // @ts-ignore
+                  slug={`/${options.relationTo!}/${doc?.slug!}`}
+                  title={doc.title}
+                  // @ts-ignore
+                  imageUrl={doc?.details?.image?.url}
+                  // @ts-ignore
+                  alt={doc?.details?.image?.alt}
+                />
+              )
+            })}
+          </>
+        ) : null}
+        {options.relationTo === "media" ? (
+          <>
+            {archiveQuery?.docs.map((doc, i) => {
+              return (
+                <ArchiveMediaCard
+                  key={doc.id + i}
+                  // @ts-ignore
+                  imageUrl={doc.url!}
+                  // @ts-ignore
+                  alt={doc.alt!}
+                  className="w-[400px] flex-none"
+                />
+              )
+            })}
+          </>
+        ) : null}
+      </div>
+    )
+  }
   return (
     <Grid
       gap="none"
@@ -66,21 +109,34 @@ export const ArchiveByCollection: React.FC<Props> = async ({
         </Label>
       )}
       {archiveQuery?.docs.map((doc) => {
-        console.log("doc::: ", doc)
-        return (
-          <ArchiveCard
-            key={doc.id}
-            // @ts-ignore
-            date={doc?.details?.date}
-            // @ts-ignore
-            slug={`/${options.relationTo!}/${doc?.slug!}`}
-            title={doc.title}
-            // @ts-ignore
-            imageUrl={doc?.details?.image?.url}
-            // @ts-ignore
-            alt={doc?.details?.image?.alt}
-          />
-        )
+        if (options.relationTo === "media") {
+          return (
+            <ArchiveMediaCard
+              key={doc?.id}
+              // @ts-ignore
+              imageUrl={doc?.url!}
+              // @ts-ignore
+              alt={doc?.alt!}
+              className="w-[400px] flex-none"
+            />
+          )
+        }
+        if (options.relationTo === "events") {
+          return (
+            <ArchiveCard
+              key={doc.id}
+              // @ts-ignore
+              date={doc?.details?.date}
+              // @ts-ignore
+              slug={`/${options.relationTo!}/${doc?.slug!}`}
+              title={doc.title}
+              // @ts-ignore
+              imageUrl={doc?.details?.image?.url}
+              // @ts-ignore
+              alt={doc?.details?.image?.alt}
+            />
+          )
+        }
       })}
     </Grid>
   )

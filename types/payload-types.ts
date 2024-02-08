@@ -39,7 +39,7 @@ export interface User {
 }
 export interface Page {
   id: string
-  slug?: string | null
+  slug: string
   title: string
   hero?:
     | (
@@ -415,7 +415,7 @@ export interface Page {
 }
 export interface Event {
   id: string
-  slug?: string | null
+  slug: string
   title: string
   details: {
     image?: string | Media | null

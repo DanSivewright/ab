@@ -23,12 +23,8 @@ export const BentoBlock: React.FC<Props> = ({ items }) => {
   return (
     <section className="flex flex-col gap-2 px-2 mb-3">
       <Double
-        imageOne={`${process.env.NEXT_PUBLIC_API_URL!.replace(/\/api$/, "")}${
-          items?.[0]?.imagePath as string
-        }`}
-        imageTwo={`${process.env.NEXT_PUBLIC_API_URL!.replace(/\/api$/, "")}${
-          items?.[1]?.imagePath as string
-        }`}
+        imageOne={items?.[0]?.imagePath as string}
+        imageTwo={items?.[1]?.imagePath as string}
         titleOne={items?.[0]?.title!}
         titleTwo={items?.[1]?.title!}
         badgesOne={items?.[0]?.categories?.map((x) => x)}
@@ -38,9 +34,7 @@ export const BentoBlock: React.FC<Props> = ({ items }) => {
         <Image
           fill
           alt="Alt text for the image"
-          src={`${process.env.NEXT_PUBLIC_API_URL!.replace(/\/api$/, "")}${
-            items?.[2]?.imagePath as string
-          }`}
+          src={items?.[2]?.imagePath as string}
           className="object-cover"
         />
         <div className="absolute inset-0 z-10 flex h-full w-full flex-col justify-between p-3">
