@@ -29,7 +29,7 @@ export const ArchiveBySelection: React.FC<Props> = ({ block, showTotal }) => {
               return (
                 <ArchiveMediaCard
                   key={media.id + i}
-                  imageUrl={media.url!}
+                  imageUrl={(media as Media).imagekit?.url!}
                   alt={media.alt!}
                   className="w-[400px] flex-none"
                 />
@@ -45,7 +45,7 @@ export const ArchiveBySelection: React.FC<Props> = ({ block, showTotal }) => {
                   // @ts-ignore
                   date={event.date}
                   // @ts-ignore
-                  imageUrl={(event.image as Media).url!}
+                  imageUrl={(event.image as Media).imagekit?.url!}
                   // @ts-ignore
                   alt={(event.image as Media).alt!}
                   tags={["Event"]}
@@ -68,7 +68,7 @@ export const ArchiveBySelection: React.FC<Props> = ({ block, showTotal }) => {
               return (
                 <ArchiveMediaCard
                   key={event.id}
-                  imageUrl={event.url!}
+                  imageUrl={event.imagekit?.url!}
                   alt={event.alt!}
                 />
               )
@@ -82,7 +82,7 @@ export const ArchiveBySelection: React.FC<Props> = ({ block, showTotal }) => {
                   // @ts-ignore
                   date={event.date}
                   // @ts-ignore
-                  imageUrl={(event.image as Media).url!}
+                  imageUrl={(event.image as Media).imagekit?.url!}
                   // @ts-ignore
                   alt={(event.image as Media).alt!}
                   tags={["Event"]}
@@ -101,7 +101,7 @@ export const ArchiveBySelection: React.FC<Props> = ({ block, showTotal }) => {
             const event = item.value as EventType
             return {
               title: event.title,
-              imagePath: (event?.details?.image as Media).url!,
+              imagePath: (event?.details?.image as Media).imagekit?.url!,
               categories:
                 event?.details?.categories && event?.details?.categories.length
                   ? event?.details?.categories?.map((cat) => {
