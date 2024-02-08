@@ -32,12 +32,13 @@ export const MinimalHero: React.FC<Props> = ({ text, imageUrl }) => {
     return (
       <>
         <div className="w-screen h-[45dvh] relative overflow-hidden bg-zinc-300">
-          <Image
+          <p>{imageUrl}</p>
+          {/* <Image
             alt="Event cover image"
-            src={makeImageUrl(imageUrl)}
+            src={imageUrl}
             fill
             className="object-cover"
-          />
+          /> */}
         </div>
         <Title showAs={2} className="px-4 text-balance">
           {parts.map((part, index) => {
