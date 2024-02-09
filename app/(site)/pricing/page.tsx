@@ -275,7 +275,7 @@ const PricingPage: React.FC<Props> = async ({}) => {
           </Title>
         </div>
         <div>
-          <ul className="grid mt-8 mx-auto text-white md:grid-cols-2 gap-x-12 gap-y-2">
+          <ul className="grid mt-8 text-white md:grid-cols-2 gap-x-12 gap-y-2">
             <li className="flex items-center gap-3">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -346,12 +346,47 @@ const PricingPage: React.FC<Props> = async ({}) => {
             </li>
           </ul>
           <div className="w-1/2 mx-auto mt-8">
-            <button
-              className="rounded-lg px-4 mx-auto py-2 text-sm transition-all flex items-center justify-center text-white bg-gradient-to-b from-white/[.105] to-white/[.15] hover:to-white/[.25] h-10 ring-1 ring-inset ring-white/10"
-              aria-label="Indie hacker tier"
+            <Suspense
+              fallback={
+                <button className="rounded-lg mx-auto w-[200px] px-4 py-2 text-sm transition-all flex items-center justify-center text-white bg-gradient-to-b from-white/[.105] to-white/[.15] hover:to-white/[.25] h-10 ring-1 ring-inset ring-white/10">
+                  <Loader2 size={12} className="animate-spin" />
+                </button>
+              }
             >
-              Launching Soon
-            </button>
+              <Await
+                promise={[
+                  // @ts-ignore
+                  hasSubscription({}),
+                  // @ts-ignore
+                  checkoutSession({}),
+                  // @ts-ignore
+                  createCustomerPortalLink({}),
+                ]}
+              >
+                {/* @ts-ignore */}
+                {([subscription, link, manage]) => (
+                  <>
+                    {subscription ? (
+                      <Link
+                        className="rounded-lg px-4 py-2 text-sm transition-all flex items-center justify-center text-white bg-gradient-to-b from-white/[.105] to-white/[.15] hover:to-white/[.25] h-10 ring-1 ring-inset ring-white/10"
+                        aria-label="Indie hacker tier"
+                        href={manage as string}
+                      >
+                        Manage Subscription
+                      </Link>
+                    ) : (
+                      <Link
+                        className="rounded-lg px-4 py-2 text-sm transition-all flex items-center justify-center text-white bg-gradient-to-b from-white/[.105] to-white/[.15] hover:to-white/[.25] h-10 ring-1 ring-inset ring-white/10"
+                        aria-label="Indie hacker tier"
+                        href={link as string}
+                      >
+                        Join Now
+                      </Link>
+                    )}
+                  </>
+                )}
+              </Await>
+            </Suspense>
           </div>
         </div>
         <div className="mt-5 text-xs text-gray-400 lg:text-center">

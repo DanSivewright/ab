@@ -23,7 +23,7 @@ export const Pages: React.FC<Props> = async ({ slug = "home" }) => {
   })
   const hero = pageQuery?.docs?.[0]?.hero?.[0]
   const blocks = pageQuery?.docs?.[0]?.layout
-  if (["about", "members", "shop"].includes(slug)) {
+  if (["members", "shop"].includes(slug)) {
     return (
       <div className="flex w-screen h-[100dvh] z-10 bg-black overflow-hidden">
         <div className="flex h-full bg-white flex-col justify-center flex-1 px-8 py-8 md:px-12 lg:flex-none lg:px-24">
