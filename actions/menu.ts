@@ -14,10 +14,10 @@ export const menu = handler({
         {
           method: "GET",
           credentials: "include",
-          // next: {
-          //   revalidate: 60,
-          //   tags: ["menu"],
-          // },
+          next: {
+            revalidate: 60,
+            tags: ["menu"],
+          },
         }
       )
       const json = (await request.json()) as GlobalType & { nav: Menu["nav"] }

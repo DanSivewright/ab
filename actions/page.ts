@@ -14,10 +14,10 @@ export const page = handler({
         {
           method: "GET",
           credentials: "include",
-          // next: {
-          //   revalidate: 60,
-          //   tags: ["page"],
-          // },
+          next: {
+            revalidate: 60,
+            tags: ["page"],
+          },
         }
       )
       const json = (await request.json()) as Collection & { docs: Page[] }
