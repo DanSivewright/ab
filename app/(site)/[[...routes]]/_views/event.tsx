@@ -1,18 +1,25 @@
+import { Suspense } from "react"
 import Image from "next/image"
+import Link from "next/link"
 import { events } from "@/actions/events"
+import { checkoutSession, hasSubscription } from "@/actions/stripe"
+import { createTicket } from "@/actions/ticket"
+import { Loader2 } from "lucide-react"
 
 import { Category, Media } from "@/types/payload-types"
 import { makeImageUrl } from "@/lib/make-image-url"
 import serialize from "@/lib/serialize"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
-import { buttonVariants } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card"
+import { Await } from "@/components/await"
 import { Blocks } from "@/components/blocks"
+import { ConditionalLink } from "@/components/conditional-link"
 import { Grid } from "@/components/grid"
 import { Hero } from "@/components/hero"
 import { Marquee } from "@/components/marquee"
@@ -48,16 +55,54 @@ export const Event: React.FC<Props> = async ({ slug }) => {
       <ul className="flex flex-wrap items-center w-full gap-2 px-4 mt-2">
         <HoverCard openDelay={50}>
           <HoverCardTrigger asChild>
-            <button
-              className={cn(
-                buttonVariants({
-                  size: "xl",
-                  rounded: "none",
-                })
-              )}
+            <Suspense
+              fallback={
+                <Button
+                  disabled
+                  className={cn(
+                    buttonVariants({
+                      size: "xl",
+                      rounded: "none",
+                    })
+                  )}
+                >
+                  Book Now <Loader2 className="ml-2 animate-spin" size={12} />
+                </Button>
+              }
             >
-              Book Now
-            </button>
+              <Await
+                promise={[
+                  checkoutSession({
+                    eventId: event?.id!,
+                    priceId: event?.priceId!,
+                    slug: "events/" + event?.slug,
+                  }),
+                  // @ts-ignore
+                  hasSubscription({}),
+                ]}
+              >
+                {/* @ts-ignore */}
+                {([url, paid]) => (
+                  <ConditionalLink
+                    toastOpts={{
+                      title: "You have already booked this event.",
+                      description: "Check your email for the confirmation.",
+                    }}
+                    condition={true}
+                    // condition={!paid}
+                    href={"" + url}
+                    className={cn(
+                      buttonVariants({
+                        size: "xl",
+                        rounded: "none",
+                      })
+                    )}
+                  >
+                    {paid ? "Booked" : "Book Now"}
+                  </ConditionalLink>
+                )}
+              </Await>
+            </Suspense>
           </HoverCardTrigger>
           <HoverCardContent align="start" className="flex flex-col gap-2">
             <div className="w-full aspect-square rounded-lg relative overflow-hidden">

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
+import { createTicket } from "@/actions/ticket"
 import { updateUserByWhere } from "@/actions/user"
 import Stripe from "stripe"
 
@@ -35,36 +36,19 @@ const webhookHandler = async (req: NextRequest) => {
     // Successfully constructed event.
     console.log("✅ Success:", event.id)
 
-    // getting to the data we want from the event
-    const subscription = event.data.object as Stripe.Subscription
-    const subscriptionId = subscription.id
+    const session = event.data.object as Stripe.Checkout.Session
 
     switch (event.type) {
-      case "customer.subscription.created":
-        const user = await updateUserByWhere({
-          where: {
-            stripeCustomerId: {
-              equals: subscription.customer as string,
-            },
-          },
+      case "checkout.session.completed":
+        const ticket = await createTicket({
           body: {
-            isActive: true,
-            subscriptionId,
+            paid: true,
+            user: session?.metadata?.payingUserId,
+            event: session?.metadata?.eventId,
           },
         })
+        // console.log("ticket::: ", ticket)
 
-        break
-      case "customer.subscription.deleted":
-        await updateUserByWhere({
-          where: {
-            stripeCustomerId: {
-              equals: subscription.customer as string,
-            },
-          },
-          body: {
-            isActive: false,
-          },
-        })
         break
 
       default:

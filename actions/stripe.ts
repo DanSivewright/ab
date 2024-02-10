@@ -8,10 +8,15 @@ import { handler, HTTPError, safeFetch } from "@/lib/safe-fetch"
 import { stripe } from "@/lib/stripe"
 
 export const checkoutSession = handler({
-  schema: z.object({}),
-  cb: async () => {
+  schema: z.object({
+    priceId: z.string(),
+    slug: z.string(),
+    eventId: z.string(),
+  }),
+  cb: async ({ priceId, eventId, slug }) => {
     try {
       const session = await getServerSession(authOptions)
+
       if (!session?.user)
         return {
           error: {
@@ -20,21 +25,26 @@ export const checkoutSession = handler({
           },
         }
       const checkoutSession = await stripe.checkout.sessions.create({
-        mode: "subscription",
+        mode: "payment",
         customer: session.user.stripeCustomerId,
         line_items: [
           {
-            price: "price_1OgjY3CGa1SLQ2e5jFeWoEUC",
+            price: priceId,
             quantity: 1,
+            adjustable_quantity: {
+              enabled: false,
+            },
           },
         ],
         success_url:
-          process.env.NEXT_PUBLIC_APP_URL + `?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: process.env.NEXT_PUBLIC_APP_URL,
-        subscription_data: {
-          metadata: {
-            payingUserId: session.user.id,
-          },
+          process.env.NEXT_PUBLIC_APP_URL +
+          `/${slug}` +
+          `?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: process.env.NEXT_PUBLIC_APP_URL + `/${slug}`,
+        metadata: {
+          payingUserId: session.user.id,
+          eventId,
+          slug,
         },
       })
       return checkoutSession.url
@@ -78,11 +88,11 @@ export const hasSubscription = handler({
     try {
       const session = await getServerSession(authOptions)
       if (!session?.user) return false
-      const subscription = await stripe.subscriptions.list({
+      const payment = await stripe.paymentIntents.list({
         customer: session.user.stripeCustomerId,
       })
 
-      return Boolean(subscription.data.length > 0)
+      return Boolean(payment.data.length > 0)
     } catch (error) {
       if (error instanceof HTTPError) {
         console.error("HTTP Error:", error.status, error.message)

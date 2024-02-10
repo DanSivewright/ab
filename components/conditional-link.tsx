@@ -9,12 +9,21 @@ type Props = {
   href: string | null
   children: React.ReactNode
   className?: string
+  toastOpts?: {
+    title?: string
+    description?: string
+    action?: {
+      label?: string
+      onClick?: () => void
+    }
+  }
 }
 export const ConditionalLink: React.FC<Props> = ({
   condition,
   href,
   children,
   className,
+  toastOpts,
   ...rest
 }) => {
   const router = useRouter()
@@ -29,14 +38,22 @@ export const ConditionalLink: React.FC<Props> = ({
       <div
         {...rest}
         onClick={() =>
-          toast("Coming soon", {
-            description: "Check our instagram for announcements.",
-            action: {
-              label: "Instagram",
-              onClick: () =>
-                router.push("https://www.instagram.com/abovebrooklyn/", {}),
-            },
-          })
+          !toastOpts
+            ? toast("Coming soon", {
+                description: "Check our instagram for announcements.",
+                action: {
+                  label: "Instagram",
+                  onClick: () =>
+                    router.push("https://www.instagram.com/abovebrooklyn/", {}),
+                },
+              })
+            : toast(toastOpts.title, {
+                description: toastOpts.description,
+                action: {
+                  label: toastOpts.action?.label ?? "",
+                  onClick: toastOpts.action?.onClick ?? (() => {}),
+                },
+              })
         }
         className={className}
       >
