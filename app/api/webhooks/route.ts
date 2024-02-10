@@ -1,9 +1,13 @@
 import { NextRequest, NextResponse } from "next/server"
+import { events } from "@/actions/events"
 import { createTicket } from "@/actions/ticket"
-import { updateUserByWhere } from "@/actions/user"
+import { getServerSession } from "next-auth"
+import { Resend } from "resend"
 import Stripe from "stripe"
 
+import { authOptions } from "@/lib/auth"
 import { stripe } from "@/lib/stripe"
+import { ReceiptEmailHtml } from "@/components/emails/ticket-email"
 
 const webhookHandler = async (req: NextRequest) => {
   try {
@@ -40,6 +44,7 @@ const webhookHandler = async (req: NextRequest) => {
 
     switch (event.type) {
       case "checkout.session.completed":
+        const authSession = await getServerSession(authOptions)
         const ticket = await createTicket({
           body: {
             paid: true,
@@ -47,9 +52,27 @@ const webhookHandler = async (req: NextRequest) => {
             event: session?.metadata?.eventId,
           },
         })
-        // console.log("ticket::: ", ticket)
 
-        break
+        const eventQuery = await events({
+          where: {
+            id: {
+              equals: session?.metadata?.eventId,
+            },
+          },
+        })
+
+        const resend = new Resend(process.env.RESEND_API_KEY)
+        const email = await resend.emails.send({
+          from: "Above Brooklyn <noreply@wixels.com>",
+          to: [session?.metadata?.payingUserId!],
+          subject: "Thank you for booking! This is your receipt.",
+          html: ReceiptEmailHtml({
+            date: new Date(),
+            email: authSession?.user?.email!,
+            orderId: session?.metadata?.orderId!,
+            event: eventQuery?.docs?.[0]!,
+          }),
+        })
 
       default:
         console.warn(`🤷‍♀️ Unhandled event type: ${event.type}`)

@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth"
 import * as z from "zod"
 
 import { authOptions } from "@/lib/auth"
-import { handler, HTTPError, safeFetch } from "@/lib/safe-fetch"
+import { handler, HTTPError } from "@/lib/safe-fetch"
 import { stripe } from "@/lib/stripe"
 
 export const checkoutSession = handler({

@@ -1,13 +1,10 @@
 import { Suspense } from "react"
 import Image from "next/image"
-import Link from "next/link"
 import { events } from "@/actions/events"
 import { checkoutSession, hasSubscription } from "@/actions/stripe"
-import { createTicket } from "@/actions/ticket"
 import { Loader2 } from "lucide-react"
 
 import { Category, Media } from "@/types/payload-types"
-import { makeImageUrl } from "@/lib/make-image-url"
 import serialize from "@/lib/serialize"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -22,10 +19,8 @@ import { Blocks } from "@/components/blocks"
 import { ConditionalLink } from "@/components/conditional-link"
 import { Grid } from "@/components/grid"
 import { Hero } from "@/components/hero"
-import { Marquee } from "@/components/marquee"
 import { Paragraph } from "@/components/paragraph"
 import { sectionVariants } from "@/components/section"
-import { Title } from "@/components/title"
 
 type Props = {
   slug: string
@@ -42,6 +37,7 @@ export const Event: React.FC<Props> = async ({ slug }) => {
   const event = eventQuery?.docs?.[0]
   const hero = event?.content?.hero?.[0]
   const blocks = event?.content?.layout
+
   return (
     <>
       {hero && <Hero key={hero?.id} content={hero} />}
@@ -98,7 +94,7 @@ export const Event: React.FC<Props> = async ({ slug }) => {
                       })
                     )}
                   >
-                    {paid ? "Booked" : "Book Now"}
+                    {paid ? "You Have Been Booked" : "Book Now"}
                   </ConditionalLink>
                 )}
               </Await>

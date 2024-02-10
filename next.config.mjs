@@ -6,7 +6,13 @@ const nextConfig = {
   //   },
   // },
   images: {
-    domains: ["localhost", "ik.imagekit.io"],
+    domains: [
+      "localhost",
+      "ik.imagekit.io",
+      "utfs.io",
+      "uploadthing.com",
+      "https:/uploadthing.com",
+    ],
   },
 }
 
