@@ -37,7 +37,6 @@ const webhookHandler = async (req: NextRequest) => {
       )
     }
 
-    // Successfully constructed event.
     console.log("✅ Success:", event.id)
 
     const session = event.data.object as Stripe.Checkout.Session

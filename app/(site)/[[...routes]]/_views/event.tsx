@@ -84,8 +84,7 @@ export const Event: React.FC<Props> = async ({ slug }) => {
                       title: "You have already booked this event.",
                       description: "Check your email for the confirmation.",
                     }}
-                    condition={true}
-                    // condition={!paid}
+                    condition={!paid}
                     href={"" + url}
                     className={cn(
                       buttonVariants({
@@ -94,7 +93,7 @@ export const Event: React.FC<Props> = async ({ slug }) => {
                       })
                     )}
                   >
-                    {paid ? "You Have Been Booked" : "Book Now"}
+                    {paid ? "Booked" : "Book Now"}
                   </ConditionalLink>
                 )}
               </Await>
