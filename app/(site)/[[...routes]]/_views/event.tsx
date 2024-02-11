@@ -89,7 +89,7 @@ export const Event: React.FC<Props> = async ({ slug }) => {
                       })
                     )}
                   >
-                    {paid ? "Booked" : "Book Now"}
+                    Booked
                   </ConditionalLink>
                 )}
               </Await>
