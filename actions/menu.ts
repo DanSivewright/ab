@@ -15,7 +15,7 @@ export const menu = handler({
           method: "GET",
           credentials: "include",
           next: {
-            revalidate: 60,
+            // revalidate: 60,
             tags: ["menu"],
           },
         }
