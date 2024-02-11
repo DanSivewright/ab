@@ -84,7 +84,8 @@ export const Event: React.FC<Props> = async ({ slug }) => {
                       title: "You have already booked this event.",
                       description: "Check your email for the confirmation.",
                     }}
-                    condition={!paid}
+                    condition={true}
+                    // condition={!paid}
                     href={"" + url}
                     className={cn(
                       buttonVariants({
