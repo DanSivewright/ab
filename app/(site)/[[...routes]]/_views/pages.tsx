@@ -31,9 +31,9 @@ export const Pages: React.FC<Props> = async ({ slug = "home" }) => {
             <div className="max-w-xl lg:p-10">
               <div>
                 <Title className="text-4xl ">Members Only!</Title>
-                <Paragraph className="max-w-xl mt-4 text-lg tracking-tight text-gray-400">
+                {/* <Paragraph className="max-w-xl mt-4 text-lg tracking-tight text-gray-400">
                   We are working hard to bring this page to you. Stay tuned!
-                </Paragraph>
+                </Paragraph> */}
               </div>
               <div className="flex gap-3 mt-10">
                 <Link

@@ -1,4 +1,5 @@
 import { Suspense } from "react"
+import { Metadata } from "next"
 import Image from "next/image"
 import { events } from "@/actions/events"
 import { checkoutSession, hasSubscription } from "@/actions/stripe"
@@ -25,6 +26,7 @@ import { sectionVariants } from "@/components/section"
 type Props = {
   slug: string
 }
+
 export const Event: React.FC<Props> = async ({ slug }) => {
   const eventQuery = await events({
     where: {
