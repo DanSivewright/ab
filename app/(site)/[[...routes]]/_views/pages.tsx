@@ -30,7 +30,7 @@ export const Pages: React.FC<Props> = async ({ slug = "home" }) => {
           <div className="w-full mx-auto lg:max-w-6xl">
             <div className="max-w-xl lg:p-10">
               <div>
-                <Title className="text-4xl ">Coming Soon!</Title>
+                <Title className="text-4xl ">Members Only!</Title>
                 <Paragraph className="max-w-xl mt-4 text-lg tracking-tight text-gray-400">
                   We are working hard to bring this page to you. Stay tuned!
                 </Paragraph>

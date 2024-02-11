@@ -14,9 +14,7 @@ export const Footer: React.FC<Props> = ({}) => {
                 <p className="font-semibold leading-6 text-black uppercase">
                   Above Brookly
                 </p>
-                <p className="mt-1 text-sm">
-                  Bongani to give me company slogan
-                </p>
+                <p className="mt-1 text-sm">for those with taste</p>
               </div>
             </div>
             <nav className="flex gap-8 mt-11">

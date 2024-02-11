@@ -1,3 +1,5 @@
+import { Metadata } from "next"
+import Head from "next/head"
 import Link from "next/link"
 import { menu } from "@/actions/menu"
 
@@ -8,6 +10,12 @@ import { Logout } from "@/components/log-out"
 
 type Props = {
   children: React.ReactNode
+}
+export const metadata: Metadata = {
+  title: "Above Brooklyn",
+  icons: {
+    icon: "/logo.png",
+  },
 }
 const SiteLayout: React.FC<Props> = async ({ children }) => {
   const menuQuery = await menu({ depth: 3 })
