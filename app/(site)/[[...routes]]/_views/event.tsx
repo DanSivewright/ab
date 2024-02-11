@@ -41,7 +41,6 @@ export const Event: React.FC<Props> = async ({ slug }) => {
   return (
     <>
       {hero && <Hero key={hero?.id} content={hero} />}
-      {/* <pre>{JSON.stringify(event, null, 2)}</pre> */}
       <Paragraph
         className="pl-4 font-mono italic text-muted-foreground/70"
         size="lg"
