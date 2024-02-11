@@ -24,6 +24,15 @@ export const checkoutSession = handler({
             message: "You are not signed in.",
           },
         }
+
+      const payment = await stripe.paymentIntents.list({
+        customer: session.user.stripeCustomerId,
+      })
+
+      const hasPaid = Boolean(payment.data.length > 0)
+
+      if (hasPaid) return null
+
       const checkoutSession = await stripe.checkout.sessions.create({
         mode: "payment",
         customer: session.user.stripeCustomerId,
