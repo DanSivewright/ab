@@ -67,18 +67,13 @@ export const Event: React.FC<Props> = async ({ slug }) => {
               }
             >
               <Await
-                promise={[
-                  checkoutSession({
-                    eventId: event?.id!,
-                    priceId: event?.priceId!,
-                    slug: "events/" + event?.slug,
-                  }),
-                  // @ts-ignore
-                  hasSubscription({}),
-                ]}
+                promise={checkoutSession({
+                  eventId: event?.id!,
+                  priceId: event?.priceId!,
+                  slug: "events/" + event?.slug,
+                })}
               >
-                {/* @ts-ignore */}
-                {([url, paid]) => (
+                {(url) => (
                   <ConditionalLink
                     toastOpts={{
                       title: "You have already booked this event.",
