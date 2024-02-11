@@ -58,6 +58,19 @@ export const authOptions: NextAuthOptions = {
     },
   },
   events: {
+    signIn: async ({ user }) => {
+      if (user.stripeCustomerId) return
+      const createStripeUser = await stripe.customers.create({
+        email: user.email!,
+        name: user.name!,
+      })
+      await updateUser({
+        id: user.id as string,
+        body: {
+          stripeCustomerId: createStripeUser.id,
+        },
+      })
+    },
     createUser: async ({ user }) => {
       const createStripeUser = await stripe.customers.create({
         email: user.email!,
